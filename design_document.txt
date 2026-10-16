@@ -1,21 +1,31 @@
 ------------ Volunteer Management System ---------------
 Overview:
-	Implement a new system that helps staff coordinate volunteers in events/tasks. This system will use a post-board signup type system to achive this.
-Staff will be able to achive this by posting a event/task that needs to get done with roles that that event/task will require. Once posted volunteers will
-get emails with the details of this event IF there is a role or multiple roles that they choose to sign up for. Volunteers will choose to accept the invitation
-for a specific role(possibility of volunteers accepting more than one role). Staff may choose to deny a volunteer for their event if either the volunteer changes
-their acceptance or feel they are unfit for such a task(needs to be trained on a specific task .etc). Each event will keep track of how many people in each role 
-is needed and keep track of how many people are left to fill a position. Once the event is over, staff indicate who did actually show up and for how long(details
-about this may change) if that information is needed in the future(volunteer tracking hours, keeping volunteers and staff accountable, .etc). Once all data is set
-or if the edit periode is up, the event data will be locked down and can no longer be edited except for administrators(not staff necessarily). 
+	Implement a new system that helps staff coordinate volunteers in events/tasks. This system will use a post-board
+sign up type system to achieve this. Staff will be able to achieve this by posting a event/task that needs to get done with roles
+that that event/task will require. Once posted volunteers will get emails with the details of this event IF there is a
+role or multiple roles that they choose to sign up for. Volunteers will choose to accept the invitation for a specific
+role(possibility of volunteers accepting more than one role). Staff may choose to deny a volunteer for their event if
+either the volunteer changes their acceptance or feel they are unfit for such a task(needs to be trained on a specific
+task .etc). Each event will keep track of how many people in each role is needed and keep track of how many people are
+left to fill a position. Once the event is over, staff indicate who did actually show up and for how long(details about
+this may change) if that information is needed in the future(volunteer tracking hours, keeping volunteers and staff
+accountable, .etc). Once all data is set or if the edit period is up, the event data will be locked down and can no
+longer be edited except for administrators(not staff necessarily). 
 Goals:
-	- Make scheduling volunteers and mananging their time quick and efficient
-	- Make these events/task as visible to as many volunteers as possible and easy for them to take on these roles
-	- View past events data inuitive and useful
+- Make scheduling volunteers and managing their time quick and efficient
+- Make these events/task as visible to as many volunteers as possible and easy for them to take on these roles
+- View past events data intuitive and useful 
+Architecture: 
+	The main UI that the staff will have access too will interface with the EventHandler service. This service has the
+responsibility of storing the event in a database, checking if an edit to the event is permitted(user authentication,
+lock down state, .etc), and to extract the needed roles from the event to pass on to the VolunteerHandler. The
+VolunteerHandler is responsibility for sending out invitations for the opportunity to the correct volunteers in its
+database. This service is also responsible for accounting for accepted invitations, which includes linking the person
+who accepted the invitation to the event and decrementing the number of roles that still needed to be filled.
 Data:
 	Staff - Sets up events(time, date, type, .etc). They also set up the roles that are needed.
 		They can send special invites to specific volunteers with automatic acceptance. They approve which of the volunteers are accepted into a role.
-	Volunteer - Someone who "applys" for events specified by a staff memeber. They indicate what kinds of roles they want to participate in and will
+	Volunteer - Someone who "apples" for events specified by a staff member. They indicate what kinds of roles they want to participate in and will
 		get emailed about events with roles they want to participate in. They can indicate whether they accept or not.
 	Events - Specific instances where help is needed. These can be actual events or just "jobs" that need to get done.
 		- Time and date
